@@ -130,9 +130,10 @@ def time_split(df: pd.DataFrame, test_years: int = 5):
 
 def eval_metrics(y_true, y_pred) -> dict:
     mae = mean_absolute_error(y_true, y_pred)
-    rmse = mean_squared_error(y_true, y_pred, squared=False)
+    mse = mean_squared_error(y_true, y_pred)   # no squared kwarg
+    rmse = float(np.sqrt(mse))
     r2 = r2_score(y_true, y_pred)
-    return {"MAE": mae, "RMSE": rmse, "R²": r2}
+    return {"MAE": float(mae), "RMSE": rmse, "R²": float(r2)}
 
 
 def forecast_country(series: pd.Series, horizon: int):
