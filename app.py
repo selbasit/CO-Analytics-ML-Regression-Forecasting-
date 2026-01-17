@@ -62,39 +62,39 @@ def make_model(model_name: str) -> Pipeline:
     numeric_transformer = Pipeline(steps=[
         ("imputer", SimpleImputer(strategy="median")),
     ])
+
     categorical_transformer = Pipeline(steps=[
-    ("imputer", SimpleImputer(strategy="most_frequent")),
-    ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
-])
+        ("imputer", SimpleImputer(strategy="most_frequent")),
+        ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+    ])
 
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", numeric_transformer, []),
-        ("cat", categorical_transformer, categorical),
-    ],
-    remainder="drop",
-    sparse_threshold=0.0,   # force dense output
-)
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", numeric_transformer, []),   # numeric columns set later
+            ("cat", categorical_transformer, categorical),
+        ],
+        remainder="drop",
+        sparse_threshold=0.0,  # FORCE dense output
+    )
 
-if model_name == "Ridge (Linear)":
-        estimator = Ridge(alpha=1.0, random_state=0)
-elif model_name == "Random Forest":
+    if model_name == "Ridge (Linear)":
+        estimator = Ridge(alpha=1.0)
+    elif model_name == "Random Forest":
         estimator = RandomForestRegressor(
-            n_estimators=400,
-            random_state=0,
+            n_estimators=300,
+            random_state=42,
             n_jobs=-1,
-            max_depth=None,
             min_samples_leaf=2
         )
-else:
+    else:
         estimator = HistGradientBoostingRegressor(
-            random_state=0,
+            random_state=42,
             max_depth=6,
             learning_rate=0.08,
-            max_iter=600
+            max_iter=400
         )
 
-return Pipeline(steps=[
+    return Pipeline(steps=[
         ("preprocess", preprocessor),
         ("model", estimator),
     ])
