@@ -289,12 +289,10 @@ def main():
     st.plotly_chart(fig_f, use_container_width=True)
 
     st.info(
-        "Notes:
-"
-        "- Regression is a **panel model** (all countries + years) with `iso_code` encoded.
-"
-        "- Forecast is a **country-only univariate** model (Exponential Smoothing if available; otherwise linear trend)."
-    )
+    """Notes:
+- Regression is a **panel model** (all countries + years) with `iso_code` encoded.
+- Forecast is a **country-only univariate** model (Exponential Smoothing if available; otherwise linear trend)."""
+)
 
 
 if __name__ == "__main__":
