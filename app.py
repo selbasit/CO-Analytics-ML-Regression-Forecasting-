@@ -78,7 +78,7 @@ preprocessor = ColumnTransformer(
 
 if model_name == "Ridge (Linear)":
         estimator = Ridge(alpha=1.0, random_state=0)
-    elif model_name == "Random Forest":
+elif model_name == "Random Forest":
         estimator = RandomForestRegressor(
             n_estimators=400,
             random_state=0,
@@ -86,7 +86,7 @@ if model_name == "Ridge (Linear)":
             max_depth=None,
             min_samples_leaf=2
         )
-    else:
+else:
         estimator = HistGradientBoostingRegressor(
             random_state=0,
             max_depth=6,
