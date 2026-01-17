@@ -94,7 +94,7 @@ else:
             max_iter=600
         )
 
-    return Pipeline(steps=[
+return Pipeline(steps=[
         ("preprocess", preprocessor),
         ("model", estimator),
     ])
