@@ -76,7 +76,7 @@ preprocessor = ColumnTransformer(
     sparse_threshold=0.0,   # force dense output
 )
 
-    if model_name == "Ridge (Linear)":
+if model_name == "Ridge (Linear)":
         estimator = Ridge(alpha=1.0, random_state=0)
     elif model_name == "Random Forest":
         estimator = RandomForestRegressor(
