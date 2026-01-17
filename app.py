@@ -63,18 +63,18 @@ def make_model(model_name: str) -> Pipeline:
         ("imputer", SimpleImputer(strategy="median")),
     ])
     categorical_transformer = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("onehot", OneHotEncoder(handle_unknown="ignore")),
-    ])
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+])
 
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", numeric_transformer, []),  # set later
-            ("cat", categorical_transformer, categorical),
-        ],
-        remainder="drop",
-        sparse_threshold=0.3,
-    )
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", numeric_transformer, []),
+        ("cat", categorical_transformer, categorical),
+    ],
+    remainder="drop",
+    sparse_threshold=0.0,   # force dense output
+)
 
     if model_name == "Ridge (Linear)":
         estimator = Ridge(alpha=1.0, random_state=0)
